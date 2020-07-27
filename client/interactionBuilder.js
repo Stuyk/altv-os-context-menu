@@ -3,8 +3,6 @@ import alt from 'alt';
 
 const url = 'http://resource/client/html/index.html';
 const menus = {};
-const entities = {};
-const models = {};
 
 let view;
 let data;
@@ -29,70 +27,38 @@ function handleInteraction(type, entity, model, coords) {
         coords
     };
 
-    if (models[model]) {
-        view.focus();
-        showCursor(true);
-        const cursor = alt.getCursorPos();
-        view.emit('context:Mount', menus[model], cursor.x, cursor.y);
+    if (!menus[model]) {
         return;
     }
 
-    if (menus[entity]) {
-        view.focus();
-        showCursor(true);
-        const cursor = alt.getCursorPos();
-        view.emit('context:Mount', menus[entity], cursor.x, cursor.y);
-    }
+    view.focus();
+    showCursor(true);
+    const cursor = alt.getCursorPos();
+    view.emit('context:Mount', menus[model], cursor.x, cursor.y);
+    return;
 }
 
-function handleCreateMenu(identifier, entityOrModel, title, isModel = false) {
-    if (menus[entityOrModel]) {
-        alt.log(`[CONTEXT-ERROR] Identifier ${identifier} is already in use for entity/model ${entityOrModel}.`);
+function handleCreateMenu(model, title) {
+    if (menus[model]) {
+        alt.log(`[CONTEXT-ERROR] Model ${model} is already in use for entity/model ${model}.`);
         return;
     }
 
-    let invalidIdentifier = false;
-    Object.keys(menus).forEach(key => {
-        if (invalidIdentifier) {
-            return;
-        }
-
-        if (menus[key] && menus[key].identifier === identifier) {
-            invalidIdentifier = true;
-            return;
-        }
-    });
-
-    if (invalidIdentifier) {
-        alt.log(`[CONTEXT-ERROR] Identifier ${identifier} is already in use for entity/model ${entityOrModel}.`);
-        return;
-    }
-
-    alt.log(`[CONTEXT-SUCCESS] Identifier ${identifier} is bound to ${entityOrModel}. Title: ${title}`);
-    menus[entityOrModel] = {
+    alt.log(`[CONTEXT-SUCCESS] Model ${model} is now bound. Title: ${title}`);
+    menus[model] = {
         title,
-        identifier,
-        options: [],
-        isModel
+        options: []
     };
-
-    if (isModel) {
-        models[identifier] = model;
-        return;
-    }
-
-    entities[identifier] = entityOrModel;
 }
 
-function handleAppendToMenu(identifier, menuName, callbackName, isServer = false) {
-    const entity = entities[identifier];
-
-    if (!entity) {
+function handleAppendToMenu(model, contextOptionName, eventCallbackName, isServer = false) {
+    if (!menus[model]) {
         alt.log(`[CONTEXT-ERROR] Identifier ${identifier} not found.`);
         return;
     }
 
-    menus[entity].options.push({ name: menuName, eventName: callbackName, isServer });
+    alt.log(`[CONTEXT-SUCCESS] Appended ${contextOptionName} to model ${model}.`);
+    menus[model].options.push({ name: contextOptionName, eventName: eventCallbackName, isServer });
 }
 
 function showCursor(state) {

@@ -49,18 +49,16 @@ They are attached to an identifier and an entity id.
 
 `alt.emit('context:CreateMenu')`
 
-| Argument        | Description                                                                                                                 |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `identifier`    | The name to identify this interaction with. Must be unique. Unless using `isModel`                                          |
-| `entityOrModel` | The entity or model. If using model. Ensure to set `isModel` to true. This will work for all models across the map.         |
-| `title`         | The name of the menu.                                                                                                       |
-| `isModel`       | If you used a `model #` instead of an `entity #` you must specify true. Globally applies menu to all models across the map. |
+| Argument | Description                                           |
+| -------- | ----------------------------------------------------- |
+| `model`  | The model of the model you wish to append options to. |
+| `title`  | The name of the menu.                                 |
 
 ### Example
 
 ```js
 alt.on('context:Ready', () => {
-    alt.emit('context:CreateMenu', 'trashcan1', 49666, 'Trash Can');
+    alt.emit('context:CreateMenu', 1329570871, 'Trash Can');
 });
 ```
 
@@ -71,22 +69,20 @@ Use the identifier to apply options to a menu.
 
 `alt.emit('context:CreateMenu')`
 
-identifier, menuName, callbackName, isServer = false
-
-| Argument       | Description                                                                                   |
-| -------------- | --------------------------------------------------------------------------------------------- |
-| `identifier`   | The name to identify this interaction with. Must be unique.                                   |
-| `menuName`     | The name of the option.                                                                       |
-| `callbackName` | The event to call when the option is selected. Comes through `alt.emit` or `alt.onClient`     |
-| `isServer`     | If true. Then the `callbackName` event will come through `alt.onClient`. Otherwise `alt.emit` |
+| Argument            | Description                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| `model`             | The model of the model you wish to append options to.                                         |
+| `contextOptionName` | The name of the option you are appending.                                                     |
+| `eventCallbackName` | The event to call when the option is selected. Comes through `alt.emit` or `alt.onClient`     |
+| `isServer`          | If true. Then the `callbackName` event will come through `alt.onClient`. Otherwise `alt.emit` |
 
 ### Example
 
 ```js
 alt.on('context:Ready', () => {
-    alt.emit('context:CreateMenu', 'trashcan1', 49666, 'Trash Can');
-    alt.emit('context:AppendToMenu', 'trashcan1', 'Look in Trash', 'trashcan:Look', false);
-    alt.emit('context:AppendToMenu', 'trashcan1', 'Dig in Trash', 'trashcan:Dig', true);
+    alt.emit('context:CreateMenu', 1329570871, 'Trash Can');
+    alt.emit('context:AppendToMenu', 1329570871, 'Look in Trash', 'trashcan:Look', false);
+    alt.emit('context:AppendToMenu', 1329570871, 'Dig in Trash', 'trashcan:Dig', true);
 });
 ```
 

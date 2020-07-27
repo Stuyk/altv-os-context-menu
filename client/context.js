@@ -4,7 +4,7 @@ import * as native from 'natives';
 import * as utilityScreen2World from '/client/utility/screen2world.js';
 import { distance } from '/client/utility/vector.js';
 
-const raycastFlags = 1 | 2 | 4 | 8 | 16 | 128 | 256;
+const raycastFlags = 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
 
 let hasSelected = false;
 let clickCooldown = Date.now();

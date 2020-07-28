@@ -6,6 +6,10 @@ Created by Stuyk (Trevor Wessel)
 
 https://github.com/sponsors/Stuyk/
 
+❤️ Want direct support for my scripts and tutoring? Check out my Patreon.
+
+https://patreon.com/stuyk
+
 ⭐ This repository if you found it useful!
 
 ---
@@ -14,7 +18,7 @@ https://github.com/sponsors/Stuyk/
 
 # Description
 
-This allows you to create a simple context menu for players to utilize. Which means they can hold `left alt` and `right-click` on objects to select different objects. Which is great for creating in-depth options for players to utilize.
+This allows you to create a simple context menu for players to utilize. Which means they can hold `left alt` and `right-click` on objects to select different objects based on their models. Which is great for creating in-depth options for players to utilize.
 
 ## Installing Dependencies / Installation
 
@@ -46,6 +50,9 @@ Ensure your `package.json` includes this property:
 All menus must be created on **client-side**.
 They only need to be initialized once.
 They are attached to an identifier and an entity id.
+
+Go in-game. Hold `alt` and `right-click` on any object.
+Open your console with `F8` then look at the model number for the object.
 
 `alt.emit('context:CreateMenu')`
 
